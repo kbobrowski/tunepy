@@ -1,32 +1,34 @@
 # tunepy
-Python decorator which allows to interactively tune arguments of a function.
+Python decorator which allows to interactively tune arguments of a function using a simple GUI.
 
 Automatically determines output type (matplotlib / numpy image / return value / console output).
 
-Decorated function can take instances of a "tunable" class instead of constant values as arguments.
+## Installation
+
+```
+pip install tunepy
+```
+
+## Usage
+
+Function decorated with @tunepy can accept instances of "tunable" class:
+
+```
+tunable(argument_type, definition=definition, listDesc=values_description, ticks=number_of_ticks)
+```
+
+where:
+
+- ```arguemnt_type```: one of ```[list, float, int, str, bool]```
+- ```definition```:
+  - ```[lower_bound, upped_bound``` for ```int``` and ```float```
+  - list of arguemnts for ```list```,
+  - optional default string for ```str```
 
 ## Examples
 ### matplotlib
 
-Code to plot a function:
-
-```python
-import matplotlib.pyplot as plt
-
-def matplotlibTest(fun, amp, title='test', fi=0, grid=False, y_lim=2):
-    fig, ax = plt.subplots()
-    plt.title(title)
-    x = np.linspace(-np.pi, np.pi, 1000)
-    y = amp*fun(x-fi)
-    ax.plot(x,y)
-    if grid: ax.grid()
-    ax.set_ylim([-y_lim,y_lim])
-
-matplotlibTest(np.sin, 0.5, fi=0, title='test', grid=True, y_lim=2)
-plt.show()
-```
-
-can be easily decorated to allow interactive parameter tuning:
+Note that for decorated function plt.show() is not called.
 
 ```python
 import matplotlib.pyplot as plt

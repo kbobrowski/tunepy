@@ -1,4 +1,5 @@
-from distutils.core import setup
+from setuptools import setup
+
 long_description = \
 """
 Python decorator which allows to interactively tune arguments of a function.
