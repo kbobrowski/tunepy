@@ -7,7 +7,7 @@ from tunepy import tunepy, tunable
 
 @tunepy
 def matplotlibTest(fun, amp, title='test', fi=0, grid=False, y_lim=2):
-    fig, ax = plt.subplots(1)
+    fig, ax = plt.subplots()
     plt.title(title)
     x = np.linspace(-np.pi, np.pi, 1000)
     y = amp*fun(x-fi)
