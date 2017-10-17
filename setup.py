@@ -29,7 +29,7 @@ setup(
             'Programming Language :: Python :: 3.5',
             'Programming Language :: Python :: 3.6'
         ],
-        keywords='optimization visualization tuning interactive'],
+        keywords='optimization visualization tuning interactive',
         packages=['tunepy'],
         python_requires='>=3'
 )
