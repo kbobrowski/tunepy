@@ -1,6 +1,5 @@
 from distutils.core import setup
-
-long_decription = \
+long_description = \
 """
 Python decorator which allows to interactively tune arguments of a function.
 Automatically determines output type (matplotlib / numpy image / return value / console output).
