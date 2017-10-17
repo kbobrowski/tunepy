@@ -33,7 +33,7 @@ where:
 ## Examples
 ### matplotlib
 
-Note that for decorated function plt.show() is not called.
+Note that there is no call to ```plt.show()```.
 
 ```python
 import matplotlib.pyplot as plt
@@ -96,4 +96,16 @@ textTest(line)
 
 ## Tips
 
-Output type can be forced by using tunepy\_mode decorator with output type passed as a first argument ("unknown" / "print" / "matplotlib" / "numpyPixmap")
+Output type can be forced by using ```tunepy_mode``` decorator with output type passed as a first argument (```"unknown"``` / ```"print"``` / ```"matplotlib"``` / ```"numpyPixmap"```):
+
+```python
+from scipy import misc
+from tunepy import tunepy_mode, tunable
+
+@tunepy_mode("numpyPixmap")
+def pixmapTest(brightness=1):
+    return misc.face()*brightness
+
+brightness = tunable(float, [0,1])
+pixmapTest(brightness=brightness)
+```
