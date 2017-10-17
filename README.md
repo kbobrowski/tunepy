@@ -1,6 +1,9 @@
 # tunepy
 Python decorator which allows to interactively tune arguments of a function.
 
+Automatically determines output type (matplotlib / numpy image / return value / console output).
+
+Decorated function can take instances of a "tunable" class instead of constant values as arguments.
 
 ## Example
 
@@ -47,3 +50,7 @@ matplotlibTest(fun, amp, fi=fi, title=title, grid=grid, y_lim=2)
 ```
 
 ![example](screenshot.png)
+
+## Tips
+
+Output type can be forced by using tunepy\_mode decorator with output type passed as a first argument ("unknown" / "print" / "matplotlib" / "numpyPixmap")
