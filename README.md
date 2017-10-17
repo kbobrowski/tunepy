@@ -1,6 +1,8 @@
 # tunepy
 Python decorator which allows to interactively tune arguments of a function.
 
+![example](screenshot.png)
+
 ## Example
 
 Code to plot sinus function:
