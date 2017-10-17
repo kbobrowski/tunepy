@@ -9,6 +9,12 @@ Automatically determines output type (matplotlib / numpy image / return value / 
 pip install tunepy
 ```
 
+Dependencies:
+- python3
+- numpy
+- matplotlib
+- PyQt5
+
 ## Usage
 
 Function decorated with ```@tunepy``` can accept instances of ```tunable``` class as arguments:
