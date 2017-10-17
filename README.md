@@ -11,7 +11,7 @@ pip install tunepy
 
 ## Usage
 
-Function decorated with ```@tunepy``` can accept instances of ```tunable``` class:
+Function decorated with ```@tunepy``` can accept instances of ```tunable``` class as arguments:
 
 ```
 tunable_argument = tunable(argument_type,
