@@ -30,3 +30,18 @@ def pixmapTest(brightness=1):
 
 brightness = tunable(float, [0,1])
 pixmapTest(brightness=brightness)
+
+
+
+import contextlib, io
+zen = io.StringIO()
+with contextlib.redirect_stdout(zen):
+    import this
+text = zen.getvalue().splitlines()
+
+@tunepy
+def textTest(line):
+    return "\n".join(text[:line])
+
+line = tunable(int, [1, len(text)])
+textTest(line)

@@ -5,7 +5,8 @@ Automatically determines output type (matplotlib / numpy image / return value / 
 
 Decorated function can take instances of a "tunable" class instead of constant values as arguments.
 
-## Example
+## Examples
+### matplotlib
 
 Code to plot a function:
 
@@ -50,6 +51,41 @@ matplotlibTest(fun, amp, fi=fi, title=title, grid=grid, y_lim=2)
 ```
 
 ![example](screenshot.png)
+
+### numpy image
+
+```python
+from scipy import misc
+from tunepy import tunepy, tunable
+
+@tunepy
+def pixmapTest(brightness=1):
+    return misc.face()*brightness
+
+brightness = tunable(float, [0,1])
+pixmapTest(brightness=brightness)
+```
+
+![example2](screenshot2.png)
+
+### text output
+
+```python
+import contextlib, io
+zen = io.StringIO()
+with contextlib.redirect_stdout(zen):
+    import this
+text = zen.getvalue().splitlines()
+
+@tunepy
+def textTest(line):
+    return "\n".join(text[:line])
+
+line = tunable(int, [1, len(text)])
+textTest(line)
+```
+
+![example3](screenshot3.png)
 
 ## Tips
 

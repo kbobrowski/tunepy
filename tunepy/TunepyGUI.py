@@ -46,8 +46,12 @@ class TunepyGUI(TunepyGUICore):
 
     def print(self, result):
         from pprint import pformat
+        if type(result) == str:
+            toprint = result
+        else:
+            toprint = pformat(result)
         centralWidget = QtWidgets.QPlainTextEdit()
         centralWidget.setReadOnly(True)
-        centralWidget.setPlainText(pformat(result))
+        centralWidget.setPlainText(toprint)
         self.setCentralWidget(centralWidget)
 
