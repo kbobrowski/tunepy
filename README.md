@@ -11,19 +11,24 @@ pip install tunepy
 
 ## Usage
 
-Function decorated with @tunepy can accept instances of "tunable" class:
+Function decorated with ```@tunepy``` can accept instances of ```tunable``` class:
 
 ```
-tunable(argument_type, definition=definition, listDesc=values_description, ticks=number_of_ticks)
+tunable_argument = tunable(argument_type,
+                           definition=definition,
+                           listDesc=list_description,
+                           ticks=number_of_ticks)
 ```
 
 where:
 
 - ```arguemnt_type```: one of ```[list, float, int, str, bool]```
-- ```definition```:
-  - ```[lower_bound, upped_bound``` for ```int``` and ```float```
+- ```definition```: one of the following:
+  - ```[lower_bound, upped_bound]``` for ```int``` and ```float```
   - list of arguemnts for ```list```,
-  - optional default string for ```str```
+  - default string for ```str``` (optional)
+- ```list_description```: list of strings to display instead of default, optional for ```list```
+- ```number_of_ticks```: number of ticks for a slider bar, optional for ```float``` and ```int```
 
 ## Examples
 ### matplotlib
