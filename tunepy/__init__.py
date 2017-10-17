@@ -1,2 +1,2 @@
 from tunepy.tunable import tunable
-from tunepy.tunepy import tunepy
+from tunepy.tunepy import tunepy, tunepy_mode
