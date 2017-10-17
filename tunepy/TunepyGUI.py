@@ -1,6 +1,44 @@
-from PyQt5 import QtWidgets
+from PyQt5 import QtGui, QtWidgets
 import numpy as np
-from tunepy.widgets import TunepyGUICore, PixmapWidget, MatplotlibWidget
+import matplotlib
+matplotlib.use('Qt5Agg')
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.backends.backend_qt5 import NavigationToolbar2QT as NavigationToolbar
+from tunepy.widgets import TunepyGUICore
+
+
+
+class PixmapWidget(QtWidgets.QWidget):
+    def __init__(self, parent=None):
+        QtWidgets.QWidget.__init__(self, parent)
+
+        self.label = QtWidgets.QLabel("test")
+        
+        layout = QtWidgets.QGridLayout()
+        layout.addWidget(self.label, 0, 0)
+
+        self.setLayout(layout)
+
+
+    def setImage(self, img):
+        qimage = QtGui.QImage(img.data, img.shape[1], img.shape[0], QtGui.QImage.Format_RGB888)
+        pixmap = QtGui.QPixmap(qimage)
+        self.label.setPixmap(pixmap)
+
+
+
+class MatplotlibWidget(QtWidgets.QWidget):
+    def __init__(self, fig, parent=None):
+        QtWidgets.QWidget.__init__(self, parent)
+        canvas = FigureCanvas(fig)
+        canvas.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        canvas.updateGeometry()
+        toolbar = NavigationToolbar(canvas, self)
+
+        layout = QtWidgets.QVBoxLayout()
+        layout.addWidget(toolbar)
+        layout.addWidget(canvas)
+        self.setLayout(layout)
 
 
 

@@ -1,10 +1,6 @@
-from PyQt5 import QtGui, QtCore, QtWidgets
+from PyQt5 import QtCore, QtWidgets
 import math
 import functools
-import matplotlib
-matplotlib.use('Qt5Agg')
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-from matplotlib.backends.backend_qt5 import NavigationToolbar2QT as NavigationToolbar
 from tunepy.tunable import tunable
 
 
@@ -44,7 +40,7 @@ class Tuner(QtWidgets.QFrame):
             self.min = definition[0]
             self.max = definition[1]
             if self.kind == float:
-                ticks = 10000
+                ticks = 100
                 if type(addKwargs) == dict:
                     if 'ticks' in addKwargs:
                         if type(addKwargs['ticks']) == int:
@@ -219,37 +215,3 @@ class TunepyGUICore(QtWidgets.QMainWindow):
     def changeAction(self):
         result = self.execFunction()
         self.update(result)
-
-
-
-class PixmapWidget(QtWidgets.QWidget):
-    def __init__(self, parent=None):
-        QtWidgets.QWidget.__init__(self, parent)
-
-        self.label = QtWidgets.QLabel("test")
-        
-        layout = QtWidgets.QGridLayout()
-        layout.addWidget(self.label, 0, 0)
-
-        self.setLayout(layout)
-
-
-    def setImage(self, img):
-        qimage = QtGui.QImage(img.data, img.shape[1], img.shape[0], QtGui.QImage.Format_RGB888)
-        pixmap = QtGui.QPixmap(qimage)
-        self.label.setPixmap(pixmap)
-
-
-
-class MatplotlibWidget(QtWidgets.QWidget):
-    def __init__(self, fig, parent=None):
-        QtWidgets.QWidget.__init__(self, parent)
-        canvas = FigureCanvas(fig)
-        canvas.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        canvas.updateGeometry()
-        toolbar = NavigationToolbar(canvas, self)
-
-        layout = QtWidgets.QVBoxLayout()
-        layout.addWidget(toolbar)
-        layout.addWidget(canvas)
-        self.setLayout(layout)
