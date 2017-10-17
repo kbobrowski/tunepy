@@ -31,8 +31,7 @@ setup(
         ],
         keywords='optimization visualization tuning interactive'],
         packages=['tunepy'],
-        python_requires='>=3',
-        classifiers=[],
+        python_requires='>=3'
 )
 
 
