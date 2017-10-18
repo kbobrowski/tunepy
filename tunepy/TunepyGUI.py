@@ -62,7 +62,7 @@ class TunepyGUI(TunepyGUICore):
             else:
                 method = self.print
         else:
-            method = getattr(self, mode)
+            method = getattr(self, self.mode)
         method(result)
         plt.close()
     

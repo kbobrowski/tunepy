@@ -195,7 +195,7 @@ class TunepyGUICore(QtWidgets.QMainWindow):
         self.tunerDock = TunerDock(funName, self.tunerList, self.tunerDict)
         self.addDockWidget(QtCore.Qt.LeftDockWidgetArea, self.tunerDock)
 
-        self.changeAction()
+        self.update()
 
 
     def buildTunerWidgets(self):
@@ -203,13 +203,13 @@ class TunepyGUICore(QtWidgets.QMainWindow):
         self.tunerDict = {}
         for arg in self.args:
             if isinstance(arg, tunable):
-                newTuner = Tuner(arg.kind, arg.definition, self, self.changeAction, addKwargs=arg.kwargs)
+                newTuner = Tuner(arg.kind, arg.definition, self, self.update, addKwargs=arg.kwargs)
             else:
                 newTuner = Tuner('constant', arg, self)
             self.tunerList.append(newTuner)
         for kwarg, arg in self.kwargs.items():
             if isinstance(arg, tunable):
-                newTuner = Tuner(arg.kind, arg.definition, self, self.changeAction, addKwargs=arg.kwargs, addDesc=kwarg)
+                newTuner = Tuner(arg.kind, arg.definition, self, self.update, addKwargs=arg.kwargs, addDesc=kwarg)
             else:
                 newTuner = Tuner('constant', arg, self, addDesc=kwarg)
             self.tunerDict[kwarg] = newTuner
@@ -227,9 +227,3 @@ class TunepyGUICore(QtWidgets.QMainWindow):
         except:
             output = traceback.format_exc()
         return output
-
-
-    def changeAction(self):
-        self.update()
-        #result = self.execFunction()
-        #self.update(result)
