@@ -20,21 +20,24 @@ Dependencies:
 Function decorated with ```@tunepy``` can accept instances of ```tunable``` class as arguments:
 
 ```
-tunable_argument = tunable(argument_type,
-                           definition=definition,
-                           listDesc=list_description,
-                           ticks=number_of_ticks)
+tunable_int = tunable.int([lower_bound, upper_bound],
+                          ticks=number_of_ticks)
+
+tunable_float = tunable.float([lower_bound, upper_bound],
+                              ticks=number_of_ticks)
+
+tunable_list = tunable.list([object_1, object_2, ...],
+                            listDesc=[object_1_str, object_2_str, ...])
+
+tunable_str = tunable.str(default_string)
+
+tunable_bool = tunable.bool()
 ```
 
 where:
 
-- ```arguemnt_type```: one of ```[list, float, int, str, bool]```
-- ```definition```: one of the following:
-  - ```[lower_bound, upped_bound]``` for ```int``` and ```float```
-  - list of arguemnts for ```list```,
-  - default string for ```str``` (optional)
-- ```list_description```: list of strings to display instead of default, optional for ```list```
-- ```number_of_ticks```: number of ticks for a slider bar, optional for ```float``` and ```int```
+- ```number_of_ticks```: number of ticks for a slider bar (optional)
+- ```object_1_str, object_2_str, ...```: string representations of ```object_1, object_2, ...``` (optional)
 
 ## Examples
 ### matplotlib

@@ -54,19 +54,19 @@ def testmode(brightness=1):
 
 
 
-pos_combo = tunable(list, ['matplotlib', 'numpy', 'print', 'unknown', 'error'])
-pos_combo_listDesc = tunable(list, [np.sin, np.cos], listDesc=['sin', 'cos'])
-pos_int = tunable(int, [1,5], ticks=4)
-pos_float = tunable(float, [0, np.pi], ticks=10)
-pos_str = tunable(str, 'test')
-pos_bool = tunable(bool)
+pos_combo = tunable.list(['matplotlib', 'numpy', 'print', 'unknown', 'error'])
+pos_combo_listDesc = tunable.list([np.sin, np.cos], listDesc=['sin', 'cos'])
+pos_int = tunable.int([1,5], ticks=4)
+pos_float = tunable.float([0, np.pi], ticks=10)
+pos_str = tunable.str('test')
+pos_bool = tunable.bool()
 pos_constant = 5
 
-kwa_combo = tunable(list, ['test1', 'test2'])
-kwa_int = tunable(int, [1,len(text)])
-kwa_float = tunable(float, [0.2,1])
-kwa_str = tunable(str)
-kwa_bool = tunable(bool)
+kwa_combo = tunable.list(['test1', 'test2'])
+kwa_int = tunable.int([1,len(text)])
+kwa_float = tunable.float([0.2,1])
+kwa_str = tunable.str()
+kwa_bool = tunable.bool()
 kwa_constant = {'test':2}
 
 testall(pos_combo,

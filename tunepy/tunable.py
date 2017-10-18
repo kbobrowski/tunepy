@@ -4,10 +4,22 @@ class tunable(object):
        self.definition = definition
        self.kwargs = kwargs
 
-       if kind == bool:
-           self.kind = list
-           self.definition = [True, False]
+    @classmethod
+    def int(cls, definition=None, **kwargs):
+        return cls(int, definition, **kwargs)
+    
+    @classmethod
+    def float(cls, definition=None, **kwargs):
+        return cls(float, definition, **kwargs)
 
-       if kind == str:
-           if definition is None:
-               self.definition = ''
+    @classmethod
+    def list(cls, definition=None, **kwargs):
+        return cls(list, definition, **kwargs)
+    
+    @classmethod
+    def bool(cls, definition=None, **kwargs):
+        return cls(list, [True, False], **kwargs)
+    
+    @classmethod
+    def str(cls, definition='', **kwargs):
+        return cls(str, definition, **kwargs)
