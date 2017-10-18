@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy import misc
-from tunepy import tunepy, tunable
+from tunepy import tunepy, tunepy_mode, tunable
 import contextlib, io
 
 
@@ -48,6 +48,10 @@ def testall(*args, **kwargs):
     if method == 'error':
         return 2/0
 
+@tunepy_mode('print')
+def testmode(brightness=1):
+    return img*brightness
+
 
 
 pos_combo = tunable(list, ['matplotlib', 'numpy', 'print', 'unknown', 'error'])
@@ -78,3 +82,5 @@ testall(pos_combo,
         str_test=kwa_str,
         bool_test=kwa_bool,
         const_test=kwa_constant)
+
+testmode(brightness=kwa_float)
