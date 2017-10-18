@@ -9,7 +9,7 @@ Decorated function can take instances of a "tunable" class (which determines ran
 
 setup(
         name='tunepy',
-        version='1.0.dev4',
+        version='1.0.dev5',
         description='Interactive function argument tuning',
         long_description=long_description,
         url='https://github.com/kbobrowski/tunepy',
