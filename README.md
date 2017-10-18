@@ -115,7 +115,7 @@ from tunepy import tunepy_mode, tunable
 def pixmapTest(brightness=1):
     return misc.face()*brightness
 
-brightness = tunable(float, [0,1])
+brightness = tunable.float([0,1])
 pixmapTest(brightness=brightness)
 ```
 
