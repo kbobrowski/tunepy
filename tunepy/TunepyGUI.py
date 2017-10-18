@@ -4,6 +4,7 @@ import matplotlib
 matplotlib.use('Qt5Agg')
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5 import NavigationToolbar2QT as NavigationToolbar
+import matplotlib.pyplot as plt
 from tunepy.widgets import TunepyGUICore
 
 
@@ -47,34 +48,36 @@ class TunepyGUI(TunepyGUICore):
         TunepyGUICore.__init__(self, *args)
     
     
-    def determineMode(self):
+    def update(self):
         result = self.execFunction()
-        if result is None:
-            import matplotlib.pyplot as plt
-            if plt.gcf().axes: self.mode = 'matplotlib'
-            else: self.mode = 'unknown'
-        elif type(result) == np.ndarray:
-            if len(result.shape) == 3 and result.shape[-1] == 3:
-                self.mode = 'numpyPixmap'
+        if self.mode == 'auto':
+            if result is None:
+                if plt.gcf().axes: method = self.matplotlib
+                else: method = self.unknown
+            elif type(result) == np.ndarray:
+                if len(result.shape) == 3 and result.shape[-1] == 3:
+                    method = self.numpy
+                else:
+                    method = self.print
             else:
-                self.mode = 'print'
+                method = self.print
         else:
-            self.mode = 'print'
+            method = getattr(self, mode)
+        method(result)
+        plt.close()
     
     
     def unknown(self, result):
-        self.tunerDock.setFeatures(QtWidgets.QDockWidget.NoDockWidgetFeatures)
+        self.print("Function output not recognized, check terminal for any output.")
     
     
     def matplotlib(self, result):
-        import matplotlib.pyplot as plt
         fig = plt.gcf()
         centralWidget = MatplotlibWidget(fig, self)
         self.setCentralWidget(centralWidget)
-        plt.close()
 
 
-    def numpyPixmap(self, result):
+    def numpy(self, result):
         centralWidget = QtWidgets.QScrollArea()
         pixmapWidget = PixmapWidget()
         pixmapWidget.setImage(np.uint8(result))

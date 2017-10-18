@@ -1,6 +1,7 @@
 from PyQt5 import QtCore, QtWidgets
 import math
 import functools
+import traceback
 from tunepy.tunable import tunable
 
 
@@ -36,6 +37,7 @@ class Tuner(QtWidgets.QFrame):
 
 
         elif self.kind in [float, int]:
+            self.silentChange = False
             self.widget = QtWidgets.QSlider(QtCore.Qt.Horizontal, self)
             self.min = definition[0]
             self.max = definition[1]
@@ -97,6 +99,7 @@ class Tuner(QtWidgets.QFrame):
 
 
     def sliderChanged(self, num, kind=None, changeAction=True):
+        if self.silentChange: return
         self.value = float(num)/self.widget.maximum()*(self.max - self.min) + self.min
         if kind == float:
             sig_figs = 6
@@ -105,6 +108,16 @@ class Tuner(QtWidgets.QFrame):
             self.value = int(round(self.value))
         self.input.setText(str(self.value))
         if not self.widget.isSliderDown() and changeAction: self.changeAction()
+
+
+    def setSliderValue(self):
+        num = (self.value - self.min) * self.widget.maximum() / (self.max - self.min)
+        num = int(num)
+        if num < 0: num = 0
+        if num > self.widget.maximum(): num = self.widget.maximum()
+        self.silentChange = True
+        self.widget.setValue(num)
+        self.silentChange = False
 
 
     def sliderInputChanged(self, kind=None):
@@ -121,7 +134,9 @@ class Tuner(QtWidgets.QFrame):
                 valueSet = True
             except:
                 QtWidgets.QMessageBox.critical(self, "Error", "Could not convert {} to int".format(self.input.text()))
-        if valueSet: self.changeAction()
+        if valueSet:
+            self.setSliderValue()
+            self.changeAction()
         
 
 
@@ -162,7 +177,7 @@ class TunerDock(QtWidgets.QDockWidget):
         self.setWidget(scrollArea)
         self.setAllowedAreas(QtCore.Qt.LeftDockWidgetArea | QtCore.Qt.RightDockWidgetArea)
         self.setFeatures(QtWidgets.QDockWidget.DockWidgetMovable | QtWidgets.QDockWidget.DockWidgetFloatable)
-        scrollArea.setSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred)
+        scrollArea.setSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Preferred)
 
 
 
@@ -180,9 +195,6 @@ class TunepyGUICore(QtWidgets.QMainWindow):
         self.tunerDock = TunerDock(funName, self.tunerList, self.tunerDict)
         self.addDockWidget(QtCore.Qt.LeftDockWidgetArea, self.tunerDock)
 
-        if self.mode == 'auto': self.determineMode()
-
-        self.update = getattr(self, self.mode)
         self.changeAction()
 
 
@@ -210,9 +222,14 @@ class TunepyGUICore(QtWidgets.QMainWindow):
             args.append(tuner.value)
         for kwarg, tuner in self.tunerDict.items():
             kwargs[kwarg] = tuner.value
-        return self.f(*args, **kwargs)
+        try:
+            output = self.f(*args, **kwargs)
+        except:
+            output = traceback.format_exc()
+        return output
 
 
     def changeAction(self):
-        result = self.execFunction()
-        self.update(result)
+        self.update()
+        #result = self.execFunction()
+        #self.update(result)
