@@ -21,8 +21,6 @@ fi = tunable(float, [0, np.pi])
 title = tunable(str, 'test')
 grid = tunable(bool)
 matplotlibTest(fun, amp, fi=fi, title=title, grid=grid, y_lim=2)
-import sys
-sys.exit(0)
 
 
 
