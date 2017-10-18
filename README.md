@@ -58,11 +58,11 @@ def matplotlibTest(fun, amp, title='test', fi=0, grid=False, y_lim=2):
     if grid: ax.grid()
     ax.set_ylim([-y_lim,y_lim])
 
-fun = tunable(list, [np.sin, np.cos], listDesc=['sin', 'cos'])
-amp = tunable(float, [0.5,2], ticks=10)
-fi = tunable(float, [0, np.pi])
-title = tunable(str, 'test')
-grid = tunable(bool)
+fun = tunable.list([np.sin, np.cos], listDesc=['sin', 'cos'])
+amp = tunable.float([0.5,2], ticks=10)
+fi = tunable.float([0, np.pi])
+title = tunable.str('test')
+grid = tunable.bool()
 matplotlibTest(fun, amp, fi=fi, title=title, grid=grid, y_lim=2)
 ```
 
@@ -78,7 +78,7 @@ from tunepy import tunepy, tunable
 def pixmapTest(brightness=1):
     return misc.face()*brightness
 
-brightness = tunable(float, [0,1])
+brightness = tunable.float([0,1])
 pixmapTest(brightness=brightness)
 ```
 
@@ -97,7 +97,7 @@ text = zen.getvalue().splitlines()
 def textTest(line):
     return "\n".join(text[:line])
 
-line = tunable(int, [1, len(text)])
+line = tunable.int([1, len(text)])
 textTest(line)
 ```
 
